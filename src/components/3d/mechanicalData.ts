@@ -1,0 +1,133 @@
+export interface MechanicalPartInfo {
+  id: string;
+  name: string;
+  partNumber: string;
+  standard: string;
+  material: string;
+  treatment: string;
+  tolerance: string;
+  surfaceFinish: string;
+  mass: string;
+  description: string;
+  colorHighlight: string;
+}
+
+export const MECHANICAL_PARTS: Record<string, MechanicalPartInfo> = {
+  shaft: {
+    id: 'shaft',
+    name: 'Input Splined Drive Shaft',
+    partNumber: 'INV-SH-4140-01',
+    standard: 'DIN 5480 Spline / ISO 286',
+    material: 'AISI 4340 Ni-Cr-Mo Forged Steel',
+    treatment: 'Through-hardened 32-36 HRC, Ind. Hardened Journals 56 HRC',
+    tolerance: 'Bearing Journals Ø28 js6 (±0.008 mm)',
+    surfaceFinish: 'Ra 0.2 µm Cylindrical Ground',
+    mass: '1.42 kg',
+    description: 'High-torque input pinion drive shaft featuring DIN 5480 involute splines, integrated retention ring groove, and precision ground bearing seats.',
+    colorHighlight: '#38bdf8',
+  },
+  sunGear: {
+    id: 'sunGear',
+    name: 'Sun Pinion Gear (Z=14, M=1.5)',
+    partNumber: 'INV-GR-SUN-14',
+    standard: 'DIN 3962 Quality 6 / AGMA 11',
+    material: '18CrNiMo7-6 Case Hardening Steel',
+    treatment: 'Case Carburized & Quenched 58-62 HRC, Case Depth 0.8 mm',
+    tolerance: 'Total Cumulative Pitch Fp: 12 µm',
+    surfaceFinish: 'Ra 0.4 µm CNC Profile Ground Teeth',
+    mass: '0.64 kg',
+    description: 'Central drive pinion with modified involute tooth profile and tip relief to eliminate transmission error and noise under peak torque.',
+    colorHighlight: '#06b6d4',
+  },
+  planets: {
+    id: 'planets',
+    name: 'Planetary Reduction Pinions (3× Z=10)',
+    partNumber: 'INV-GR-PLN-10',
+    standard: 'DIN 3962 Quality 6 / ISO 1328',
+    material: '20MnCr5 (AISI 5120) Alloy Steel',
+    treatment: 'Carbonitrided 60-64 HRC, Core Toughness >30 HRC',
+    tolerance: 'Profile Crown fHβ: 4.5 µm',
+    surfaceFinish: 'Ra 0.35 µm Superfinished Flanks',
+    mass: '0.38 kg ea (1.14 kg total)',
+    description: 'Triple satellite gear cluster running on needle roller pins. Internal bore ground to serve as direct bearing raceway for maximum power density.',
+    colorHighlight: '#10b981',
+  },
+  carrier: {
+    id: 'carrier',
+    name: 'Tri-Lobe Planet Spider Carrier',
+    partNumber: 'INV-CR-7075-03',
+    standard: 'ISO 2768-mK Precision Machining',
+    material: 'Aerospace 7075-T651 Billet Aluminum',
+    treatment: 'Type III Hard Anodize (MIL-A-8625), 50 µm thickness',
+    tolerance: 'Pin Bore True Position ⌀0.015 mm relative to datum A',
+    surfaceFinish: 'Ra 0.8 µm 5-Axis High Speed Milled',
+    mass: '0.85 kg',
+    description: 'Monolithic CNC-milled 5-axis spider carrier distributing load equally across all 3 satellite gears with integrated weight-relief cutouts.',
+    colorHighlight: '#f59e0b',
+  },
+  ringGear: {
+    id: 'ringGear',
+    name: 'Internal Annulus Ring Gear (Z=34)',
+    partNumber: 'INV-RN-42CR4',
+    standard: 'DIN 3962 Quality 7 / ISO 6336',
+    material: '42CrMo4 (AISI 4140) High-Strength Steel',
+    treatment: 'Plasma / Ion Nitrided 650-700 HV0.5',
+    tolerance: 'Pitch Runout Fr: 18 µm',
+    surfaceFinish: 'Ra 0.6 µm Gear-Shaped & Honed',
+    mass: '2.80 kg',
+    description: 'Heavy outer internal gear housing with precision-cut internal involute teeth. Serves as stationary torque reactor in reduction configuration.',
+    colorHighlight: '#a855f7',
+  },
+  bearingFront: {
+    id: 'bearingFront',
+    name: 'Deep Groove Radial Ball Bearing 6005-2RS',
+    partNumber: 'SKF-6005-2RS1/C3',
+    standard: 'DIN 625-1 / ISO 15 Class P6',
+    material: '100Cr6 (AISI 52100) Through-Hardened Chrome Steel',
+    treatment: 'Martensitic Hardened 62-65 HRC',
+    tolerance: 'Radial Runout < 6 µm (ABEC-5)',
+    surfaceFinish: 'Ra 0.05 µm Super-Lapped Raceways',
+    mass: '0.18 kg',
+    description: 'Deep-groove precision radial bearing with nitrile contact seals (2RS) and pressed brass ball cage, rated for dynamic loads up to 11.9 kN.',
+    colorHighlight: '#ec4899',
+  },
+  bearingRear: {
+    id: 'bearingRear',
+    name: 'Deep Groove Angular Bearing 6204-2RS',
+    partNumber: 'SKF-6204-2RS1',
+    standard: 'DIN 625-1 / ISO 15 Class P6',
+    material: '100Cr6 Chrome Bearing Steel',
+    treatment: 'Precision Induction Hardened',
+    tolerance: 'Radial Runout < 5 µm',
+    surfaceFinish: 'Ra 0.04 µm Super-Lapped Raceways',
+    mass: '0.14 kg',
+    description: 'Output support bearing supporting cantilevered radial and axial thrust loads from the driven mechanism.',
+    colorHighlight: '#ec4899',
+  },
+  housing: {
+    id: 'housing',
+    name: 'Machined Aluminum Flanged Housing',
+    partNumber: 'INV-HSG-6061-01',
+    standard: 'ISO 2768-fH Fine CNC Tolerance',
+    material: '6061-T6 Billet Aluminum',
+    treatment: 'Bead-Blasted & Deep Anodized Matte Charcoal',
+    tolerance: 'Bearing Bore Ø47 H7 (+0.025 / -0.000 mm)',
+    surfaceFinish: 'Ra 0.8 µm Turned & Anodized',
+    mass: '2.15 kg',
+    description: 'Protective structural housing with aerodynamic perimeter cooling fins for thermal dissipation and integrated O-ring sealing channel.',
+    colorHighlight: '#64748b',
+  },
+  bolts: {
+    id: 'bolts',
+    name: 'Socket Head Cap Screws (8× M8×25)',
+    partNumber: 'DIN 912 / ISO 4762 - M8×25 - 12.9',
+    standard: 'ISO 898-1 Property Class 12.9',
+    material: 'High-Tensile Quenched & Tempered Alloy Steel',
+    treatment: 'Black Oxide / Phosphated & Oiled',
+    tolerance: 'Thread Class 6g',
+    surfaceFinish: 'Blackened, Min Tensile 1220 MPa',
+    mass: '0.19 kg (set of 8)',
+    description: 'High-strength structural fasteners torqued to 41 Nm with Belleville conical spring washers to prevent vibration loosening.',
+    colorHighlight: '#94a3b8',
+  },
+};

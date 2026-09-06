@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MechanicalViewport } from './3d/MechanicalViewport';
+import { CADInspectionModal } from './3d/CADInspectionModal';
+import { Maximize2, MousePointer } from 'lucide-react';
 
 interface HeroProps {
   theme: 'warm' | 'dark';
@@ -7,6 +9,8 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ theme }) => {
   const [visible, setVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [inspectPartId, setInspectPartId] = useState<string | undefined>(undefined);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,8 +23,22 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
   const textSub = theme === 'warm' ? 'text-stone-500' : 'text-stone-400';
   const accentLine = theme === 'warm' ? 'bg-stone-300' : 'bg-stone-700';
   const tagColor = theme === 'warm' ? 'text-stone-400' : 'text-stone-500';
-  const btnBg = theme === 'warm' ? 'bg-[#111118] text-white hover:bg-[#2a2a3e]' : 'bg-white text-[#111118] hover:bg-stone-200';
-  const btnOutline = theme === 'warm' ? 'border-stone-300 text-stone-700 hover:border-stone-500' : 'border-stone-600 text-stone-300 hover:border-stone-400';
+  const btnBg =
+    theme === 'warm'
+      ? 'bg-[#111118] text-white hover:bg-[#2a2a3e]'
+      : 'bg-white text-[#111118] hover:bg-stone-200';
+  const btnOutline =
+    theme === 'warm'
+      ? 'border-stone-300 text-stone-700 hover:border-stone-500'
+      : 'border-stone-600 text-stone-300 hover:border-stone-400';
+
+  const viewportBorder =
+    theme === 'warm' ? 'border-stone-200/80 shadow-stone-300/40' : 'border-white/10 shadow-black/60';
+
+  const openInspection = (partId?: string) => {
+    setInspectPartId(partId);
+    setModalOpen(true);
+  };
 
   return (
     <section
@@ -28,9 +46,9 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
       ref={ref}
       className={`relative min-h-screen flex items-center ${bg} overflow-hidden`}
     >
-      {/* Subtle background grid — very faint */}
+      {/* Subtle CAD background grid */}
       <div
-        className="absolute inset-0 opacity-[0.035]"
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
           backgroundImage: `
             linear-gradient(to right, currentColor 1px, transparent 1px),
@@ -43,29 +61,31 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
 
       <div className="max-w-7xl mx-auto w-full px-6 md:px-12 pt-24 pb-16">
         {/* GRID: Left text | Right 3D */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[80vh] items-center">
-
-          {/* LEFT COLUMN — Typography */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 min-h-[82vh] items-center">
+          {/* LEFT COLUMN — Editorial Typography */}
           <div className="lg:col-span-6 flex flex-col justify-center z-10 order-2 lg:order-1">
             {/* Overline label */}
             <div
-              className={`flex items-center gap-3 mb-10 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              style={{ transitionDelay: '0ms' }}
+              className={`flex items-center gap-3 mb-8 transition-all duration-700 ${
+                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
             >
               <span className={`inline-block w-8 h-px ${accentLine}`} />
               <span className={`text-xs tracking-[0.3em] uppercase font-mono ${tagColor}`}>
-                CAD Engineering Studio
+                Precision CAD Engineering Studio
               </span>
             </div>
 
             {/* Main headline */}
             <div
-              className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              className={`transition-all duration-700 ${
+                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
               style={{ transitionDelay: '100ms' }}
             >
               <h1
                 className={`font-bold leading-[0.9] tracking-tight ${textPrimary}`}
-                style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)' }}
+                style={{ fontSize: 'clamp(2.8rem, 6.2vw, 5.2rem)' }}
               >
                 <span className="block">PRECISION</span>
                 <span className="block">IN EVERY</span>
@@ -75,42 +95,50 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
 
             {/* Sub-headline */}
             <div
-              className={`mt-8 max-w-sm transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              className={`mt-7 max-w-md transition-all duration-700 ${
+                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
               style={{ transitionDelay: '200ms' }}
             >
               <p className={`text-base leading-relaxed ${textSub}`}>
-                Industrial product design and mechanical engineering — from concept sketch to production-ready CAD documentation.
+                Industrial product design and mechanical engineering — from concept sketch to
+                production-ready CAD models, DFM validation, and GD&T documentation.
               </p>
             </div>
 
             {/* CTAs */}
             <div
-              className={`mt-10 flex flex-wrap gap-3 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              className={`mt-9 flex flex-wrap items-center gap-3.5 transition-all duration-700 ${
+                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
               style={{ transitionDelay: '300ms' }}
             >
               <a
                 href="#contact"
-                className={`px-7 py-3 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-200 ${btnBg}`}
+                className={`px-7 py-3.5 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-200 shadow-md ${btnBg}`}
               >
                 Start a Project
               </a>
-              <a
-                href="#work"
-                className={`px-7 py-3 rounded-full text-sm font-medium tracking-wider uppercase border transition-all duration-200 ${btnOutline}`}
+              <button
+                onClick={() => openInspection()}
+                className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold tracking-wider uppercase border transition-all duration-200 ${btnOutline}`}
               >
-                View Work
-              </a>
+                <Maximize2 size={15} />
+                Inspect 3D CAD
+              </button>
             </div>
 
             {/* Stats row */}
             <div
-              className={`mt-16 pt-8 border-t flex gap-10 transition-all duration-700 ${visible ? 'opacity-100' : 'opacity-0'} ${theme === 'warm' ? 'border-stone-200' : 'border-stone-800'}`}
+              className={`mt-14 pt-8 border-t flex gap-10 transition-all duration-700 ${
+                visible ? 'opacity-100' : 'opacity-0'
+              } ${theme === 'warm' ? 'border-stone-200' : 'border-stone-800'}`}
               style={{ transitionDelay: '450ms' }}
             >
               {[
-                { num: '10+', label: 'CAD Services' },
-                { num: '5', label: 'Tool Platforms' },
-                { num: '100%', label: 'Quality Focus' },
+                { num: '10+', label: 'CAD Disciplines' },
+                { num: '5', label: 'CAD Tool Suites' },
+                { num: '100%', label: 'DFM Validated' },
               ].map(({ num, label }) => (
                 <div key={label}>
                   <div className={`text-2xl font-bold ${textPrimary}`}>{num}</div>
@@ -120,30 +148,51 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             </div>
           </div>
 
-          {/* RIGHT COLUMN — 3D Viewport (CONTAINED, not fullscreen) */}
+          {/* RIGHT COLUMN — Production-Grade 3D Viewport */}
           <div
-            className={`lg:col-span-6 flex items-center justify-center order-1 lg:order-2 transition-all duration-1000 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+            className={`lg:col-span-6 flex flex-col items-center justify-center order-1 lg:order-2 transition-all duration-1000 ${
+              visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+            }`}
             style={{ transitionDelay: '100ms' }}
           >
-            <div className="relative w-full" style={{ paddingBottom: '90%' }}>
+            {/* Viewport card with rounded border and subtle shadow */}
+            <div
+              className={`relative w-full rounded-2xl overflow-hidden border shadow-2xl ${viewportBorder} ${
+                theme === 'warm' ? 'bg-[#edeae4]' : 'bg-[#0f1117]'
+              }`}
+              style={{ height: 'min(580px, 72vh)', minHeight: '420px' }}
+            >
               <MechanicalViewport
-                className="absolute inset-0 w-full h-full"
+                className="w-full h-full"
                 autoRotate={true}
-                cameraZ={7.5}
-                rotationOffset={{ x: 0.25, y: -0.35 }}
+                cameraZ={7.8}
+                rotationOffset={{ x: 0.3, y: -0.4 }}
                 explosionFactor={0}
-                enableMouseParallax={true}
+                showControls={true}
+                interactive={true}
+                onOpenInspectModal={openInspection}
               />
+            </div>
+
+            {/* Interactive hint footer */}
+            <div className="mt-3.5 flex items-center justify-between w-full px-2 text-[11px] font-mono tracking-wider uppercase text-stone-400">
+              <div className="flex items-center gap-1.5">
+                <MousePointer size={12} className="text-cyan-500 animate-bounce" />
+                <span>Drag to rotate • Scroll to zoom • Click parts to inspect</span>
+              </div>
+              <span className="hidden sm:inline">PBR Met/Rough Studio Lighting</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <div className={`w-px h-10 animate-pulse ${accentLine}`} />
-        <span className={`text-[10px] tracking-[0.3em] uppercase ${tagColor}`}>Scroll</span>
-      </div>
+      {/* Full-Screen CAD Inspection Modal */}
+      <CADInspectionModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        initialPartId={inspectPartId}
+        theme={theme}
+      />
     </section>
   );
 };
