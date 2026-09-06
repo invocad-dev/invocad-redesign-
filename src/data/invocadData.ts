@@ -229,7 +229,7 @@ export const PRODUCTS_DATA: ProductItem[] = [
     category: "Specialized Food & Spice Machinery",
     tagline: "Horizontal high-throughput material transfer system optimized for sensitive cardamom and bulk spices.",
     descriptionHtml: "A heavy-duty industrial conveyor system engineered for gentle, continuous horizontal material transfer. Specifically calibrated for handling sensitive agricultural commodities like cardamom, making it ideal for food processing plants requiring hygienic, reliable bulk movement.",
-    image: "/assets/COLOR%20SORTING%20OUTPUT%20CONVEYOR-DnJizWwv.png",
+    image: "/assets/color-sorting-conveyor.png",
     specs: [
       { label: "Drive Motor", value: "1.0 HP Industrial" },
       { label: "Gearbox Unit", value: "W63 Reduction" },
@@ -248,7 +248,7 @@ export const PRODUCTS_DATA: ProductItem[] = [
     category: "Material Transfer & Automation",
     tagline: "Ultra-smooth horizontal transfer conveyor designed for uniform distribution and inspection lines.",
     descriptionHtml: "Designed for horizontal transfer with continuous load stability. Features reinforced mild steel frame construction, vibration damping mounts, and a food-grade continuous belt assembly tailored for high-volume spice handling.",
-    image: "/assets/FLAT%20BELT%20CONVEYOR-DcxF9jJL.png",
+    image: "/assets/flat-belt-conveyor.png",
     specs: [
       { label: "Drive Motor", value: "1.0 HP High Torque" },
       { label: "Gearbox Unit", value: "W63 Precision Drive" },
@@ -267,7 +267,7 @@ export const PRODUCTS_DATA: ProductItem[] = [
     category: "Heavy-Duty Transfer",
     tagline: "Robust modular interlocking conveyor engineered for elevated transfer and high-load payloads.",
     descriptionHtml: "A modular interlocking conveyor system designed for efficient vertical elevation and horizontal transfer. The rigid structural design accommodates heavy continuous loads while allowing rapid module replacement and hygienic cleaning.",
-    image: "/assets/MODULER%20CONVEYOR-CTllZ1Dz.png",
+    image: "/assets/modular-conveyor.png",
     specs: [
       { label: "Drive Motor", value: "1.0 HP Industrial Duty" },
       { label: "Gearbox Unit", value: "W63 Industrial" },
@@ -286,7 +286,7 @@ export const PRODUCTS_DATA: ProductItem[] = [
     category: "Precision Sizing Machinery",
     tagline: "Four-deck vibro-grading machine for high-precision size classification of fox nuts (makhana).",
     descriptionHtml: "Engineered for precise, size-based multi-stage separation of makhana (fox nuts). Utilizing dual synchronized vibro-motors and multi-layer perforated sorting decks, this machine ensures uniform quality grading with zero kernel breakage.",
-    image: "/assets/MAKHANA%20OPEN%20GRADER-D8dcmUMh.png",
+    image: "/assets/makhana-open-grader.png",
     specs: [
       { label: "Vibration Drive", value: "Dual Vibro Motor (1 HP × 2)" },
       { label: "Infeed Hopper", value: "20 kg Capacity with Gate Control" },
@@ -305,7 +305,7 @@ export const PRODUCTS_DATA: ProductItem[] = [
     category: "Sanitary Enclosed Processing",
     tagline: "Fully enclosed sanitary grading system designed for dust containment and sterile processing.",
     descriptionHtml: "An advanced, fully enclosed version of the makhana grading system. Provides comprehensive dust containment and sanitary protection during high-volume grading operations, meeting stringent food facility health standards.",
-    image: "/assets/MAKHANA%20CLOSED%20GRADER-BdwgJGpU.png",
+    image: "/assets/makhana-closed-grader.png",
     specs: [
       { label: "Vibration Drive", value: "Dual Vibro Motor (1 HP × 2)" },
       { label: "Enclosure Type", value: "Sanitary Dust-Tight Enclosure" },
