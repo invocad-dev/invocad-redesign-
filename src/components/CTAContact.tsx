@@ -29,7 +29,7 @@ export const CTAContact: React.FC<CTAContactProps> = ({ theme }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Label */}
         <div className="flex items-center gap-4 mb-16">
-          <span className={`text-xs tracking-[0.3em] uppercase font-mono ${tagColor}`}>06 — Contact</span>
+          <span className={`text-xs tracking-[0.3em] uppercase font-mono ${tagColor}`}>07 — Contact</span>
         </div>
 
         {/* Main grid */}

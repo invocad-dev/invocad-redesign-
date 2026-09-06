@@ -6,7 +6,7 @@ interface NavbarProps {
   onThemeToggle: () => void;
 }
 
-const NAV_LINKS = ['Work', 'Services', 'Process', 'Contact'];
+const NAV_LINKS = ['Work', 'Services', 'Process', 'FAQ', 'Contact'];
 
 export const Navbar: React.FC<NavbarProps> = ({ theme, onThemeToggle }) => {
   const [scrolled, setScrolled] = useState(false);

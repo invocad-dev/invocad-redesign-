@@ -5,6 +5,7 @@ import { Philosophy } from './components/Philosophy';
 import { Capabilities } from './components/Capabilities';
 import { Work } from './components/Work';
 import { Process } from './components/Process';
+import { FAQ } from './components/FAQ';
 import { CTAContact } from './components/CTAContact';
 
 type Theme = 'warm' | 'dark';
@@ -31,7 +32,7 @@ function App() {
       <Navbar theme={theme} onThemeToggle={toggleTheme} />
 
       {/*
-        ARCHITECTURE CHANGE:
+        ARCHITECTURE:
         NO fullscreen fixed 3D canvas.
         3D viewports are self-contained within specific section columns.
         Every section has clear text-only regions that are NEVER obscured.
@@ -42,6 +43,7 @@ function App() {
       <Capabilities theme={theme} />
       <Work theme={theme} />
       <Process theme={theme} />
+      <FAQ theme={theme} />
       <CTAContact theme={theme} />
     </div>
   );
