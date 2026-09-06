@@ -1,212 +1,290 @@
 import React, { useState } from 'react';
-import { X, MessageCircle, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { X, MessageCircle, ArrowUpRight, CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface WorkProps {
   theme: 'warm' | 'dark';
 }
 
-const PRODUCTS = [
+interface CaseStudy {
+  id: string;
+  code: string;
+  category: string;
+  title: string;
+  image: string;
+  scope: string[];
+  summary: string;
+  specs: Array<{ label: string; value: string }>;
+  deliverables: string[];
+}
+
+const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'cso',
-    label: 'Material Handling',
+    code: '01',
+    category: 'Machine Design & Automation',
     title: 'Color Sorting Output Conveyor',
     image: '/assets/color-sorting-conveyor.png',
-    category: 'Agricultural Processing',
+    scope: ['3D CAD Modeling', 'Mechanical Engineering', 'Manufacturing Documentation', 'Optical Sorter Integration'],
+    summary: 'A heavy-duty horizontal material transfer system engineered specifically for delicate agricultural commodities like cardamom and bulk spices. Engineered with mild steel structural channels, food-grade continuous belt, and low-friction guide rails for seamless optical color sorter discharge.',
     specs: [
-      { label: 'Drive Unit', value: '1.0 HP Industrial Motor' },
-      { label: 'Gearbox Unit', value: 'W63 Precision Drive' },
-      { label: 'Continuous Output', value: '4.5 Metric Tons / Hr' },
-      { label: 'Target Handling', value: 'Cardamom & Sensitive Bulk' },
+      { label: 'Drive Motor', value: '1.0 HP Industrial Duty' },
+      { label: 'Gearbox Reduction', value: 'W63 Precision Worm Drive' },
+      { label: 'Continuous Output', value: '4.5 Metric Tons / Hour' },
+      { label: 'Belt Profile', value: 'Food-Grade Continuous Belt (610 mm)' },
     ],
-    desc: 'High-throughput horizontal material transfer system specifically calibrated for delicate agricultural commodities like cardamom. Built with heavy-duty mild steel channel, hygienic food-grade belt, and modular mounting brackets for direct optical sorter integration.',
+    deliverables: ['Full 3D SolidWorks Assembly', 'ASME Y14.5 Fabrication Drawings', 'Laser Cut DXF Flat Patterns', 'BOM with Hardware Specs'],
   },
   {
     id: 'fbc',
-    label: 'Conveyor Automation',
-    title: 'Flat Belt Conveyor System',
+    code: '02',
+    category: 'Material Transfer Systems',
+    title: 'Flat Belt Continuous Conveyor',
     image: '/assets/flat-belt-conveyor.png',
-    category: 'Factory Automation',
+    scope: ['Chassis Design', 'Tensioning Kinematics', 'DFM Optimization', 'Shop-Floor Blueprints'],
+    summary: 'Engineered for smooth, vibration-damped horizontal transfer across food packaging and inspection lines. Features precision screw-takeup belt tensioners, sealed bearing blocks, and modular mounting brackets for rapid installation.',
     specs: [
-      { label: 'Drive Unit', value: '1.0 HP High-Torque Motor' },
-      { label: 'Effective Width', value: '610 mm (2.0 ft)' },
-      { label: 'Rated Capacity', value: '4.5 Tons / Hr' },
-      { label: 'Chassis Frame', value: 'Welded Mild Steel Channel' },
+      { label: 'Drive Unit', value: '1.0 HP High-Torque Electric Motor' },
+      { label: 'Effective Width', value: '2.0 Feet (610 mm)' },
+      { label: 'Throughput', value: '4.5 Tons / Hour Continuous' },
+      { label: 'Chassis Material', value: 'Welded Mild Steel Channel' },
     ],
-    desc: 'Continuous horizontal flat-belt conveyor engineered for uniform spice and granule distribution across inspection lines. Features low-vibration mounting dampers and adjustable belt tensioners for continuous 24/7 industrial duty.',
-  },
-  {
-    id: 'mc',
-    label: 'Elevated Handling',
-    title: 'Modular Interlocking Conveyor',
-    image: '/assets/modular-conveyor.png',
-    category: 'Bulk Handling',
-    specs: [
-      { label: 'Modular Length', value: '10 ft Segment Units' },
-      { label: 'Payload Rating', value: '150 kg / Linear Foot' },
-      { label: 'Configuration', value: 'Horizontal / Inclined' },
-      { label: 'Serviceability', value: 'Quick-Swap Modular Links' },
-    ],
-    desc: 'Heavy-duty modular conveyor system engineered for flexible plant layout and elevated material movement. Interlocking polymer segments allow high-load continuous transfer with minimal downtime and rapid washdown capability.',
+    deliverables: ['Parametric CAD Model', 'Weldment Fabrication Drawings', 'Bearing & Drive Selection Report'],
   },
   {
     id: 'mog',
-    label: 'Vibro-Classification',
-    title: 'Makhana Open Grader',
-    image: '/assets/makhana-open-grader.png',
+    code: '03',
     category: 'Agri-Commodity Machinery',
+    title: 'Makhana 4-Deck Vibro Grader',
+    image: '/assets/makhana-open-grader.png',
+    scope: ['Vibratory Kinematics', 'Multi-Deck Sizing', 'Dynamic Structural Analysis', 'Fabrication Package'],
+    summary: 'Four-deck precision vibratory screening machine engineered for damage-free size classification of fox nuts (makhana). Dual synchronized unbalanced motors generate uniform elliptical trajectory to achieve clean four-tier separation with zero seed breakage.',
     specs: [
-      { label: 'Vibration Motors', value: '2× 1.0 HP Synchronized' },
-      { label: 'Grading Decks', value: '4 Tier Sizing Screens' },
-      { label: 'Throughput', value: '300 kg / Hr Continuous' },
-      { label: 'Feed Control', value: '20 kg Regulated Hopper' },
+      { label: 'Vibration Drive', value: 'Dual Vibro Motors (1.0 HP × 2)' },
+      { label: 'Sorting Decks', value: '4 Interlocking Perforated Decks' },
+      { label: 'Rated Capacity', value: '300 kg / Hour Continuous' },
+      { label: 'Infeed System', value: '20 kg Regulated Flow Gate Hopper' },
     ],
-    desc: 'Four-deck precision vibro-screening grader engineered for multi-stage size classification of fox nuts (makhana). Dual synchronized unbalanced motors generate uniform elliptical throw to prevent seed impact damage.',
+    deliverables: ['Complete Dynamic CAD Assembly', 'Laser Perforation DXFs', 'Vibration Isolator Mount Selection', 'Complete 2D GD&T Prints'],
+  },
+  {
+    id: 'mc',
+    code: '04',
+    category: 'Heavy-Duty Bulk Handling',
+    title: 'Modular Interlocking Conveyor System',
+    image: '/assets/modular-conveyor.png',
+    scope: ['Modular Architecture', 'Structural Tower CAD', 'Load Rating Calcs', 'Tooling Consultation'],
+    summary: 'A modular interlocking conveyor system designed for high-payload elevated elevation and horizontal transfer. The rigid structural design accommodates heavy continuous loads while allowing rapid segment replacement and hygienic washdown.',
+    specs: [
+      { label: 'Segment Length', value: '10.0 ft Modular Units' },
+      { label: 'Rated Payload', value: '150 kg per Linear Foot' },
+      { label: 'Elevated Height', value: '10.0 ft Structural Tower Frame' },
+      { label: 'Chassis Frame', value: 'Heavy MS Welded Substructure' },
+    ],
+    deliverables: ['Modular Assembly CAD', 'Structural Load Calculation Sheet', 'Multi-Tier Assembly BOM'],
   },
   {
     id: 'mcg',
-    label: 'Cleanroom Processing',
+    code: '05',
+    category: 'Sanitary Food Processing',
     title: 'Makhana Closed Sanitary Grader',
     image: '/assets/makhana-closed-grader.png',
-    category: 'Dust-Sealed Machinery',
+    scope: ['Dust Containment Enclosure', 'Sanitary DFM', 'Quick-Release Mechanisms', 'Fabrication Oversight'],
+    summary: 'Fully enclosed sanitary grading system designed for cleanroom environments and sterile agricultural packaging lines. Features sealed viewing ports, quick-release clamp latches, and dust-tight aspiration connections.',
     specs: [
-      { label: 'Drive Power', value: 'Dual Vibro Motors (2 HP)' },
-      { label: 'Enclosure', value: 'Sanitary Dust-Tight MS/SS' },
-      { label: 'Processing Speed', value: '300 kg / Hr Capacity' },
-      { label: 'Deck Screens', value: 'Quick-Release 4 Decks' },
+      { label: 'Enclosure Rating', value: 'Sanitary Dust-Tight MS / SS' },
+      { label: 'Vibration Drive', value: 'Dual Synchronized 1.0 HP × 2' },
+      { label: 'Throughput', value: '300 kg / Hour Efficiency' },
+      { label: 'Screen Apertures', value: 'Customizable Tier Apertures' },
     ],
-    desc: 'Fully enclosed variant of the makhana classification system designed for sterile, dust-controlled food processing environments. Sealed inspection ports, dust aspiration flanges, and tool-less deck changeover.',
+    deliverables: ['Dust-Tight Sheet Metal CAD', 'Forming & Welding Blueprints', 'Sanitary Gasket Specs'],
   },
 ];
 
 const WHATSAPP_BASE = 'https://wa.me/917812883741?text=';
 
 export const Work: React.FC<WorkProps> = ({ theme }) => {
-  const [selected, setSelected] = useState<typeof PRODUCTS[0] | null>(null);
+  const [selected, setSelected] = useState<CaseStudy | null>(null);
 
-  const bg = theme === 'warm' ? 'bg-[#EEECEA]' : 'bg-[#111318]';
-  const textPrimary = theme === 'warm' ? 'text-[#111118]' : 'text-white';
-  const textSub = theme === 'warm' ? 'text-stone-500' : 'text-stone-400';
+  const bg = theme === 'warm' ? 'bg-[#F7F6F2]' : 'bg-[#0B0C0E]';
+  const textPrimary = theme === 'warm' ? 'text-[#121316]' : 'text-white';
+  const textSub = theme === 'warm' ? 'text-stone-600' : 'text-stone-400';
   const tagColor = theme === 'warm' ? 'text-stone-400' : 'text-stone-500';
-  const cardBg = theme === 'warm' ? 'bg-white' : 'bg-[#181a20]';
   const cardBorder = theme === 'warm' ? 'border-stone-200/90' : 'border-white/10';
-  const modalBg = theme === 'warm' ? 'bg-[#F5F4F0]' : 'bg-[#14161d]';
-  const specBg = theme === 'warm' ? 'bg-stone-100' : 'bg-black/40';
+  const modalBg = theme === 'warm' ? 'bg-[#F7F6F2]' : 'bg-[#12141A]';
+  const specBg = theme === 'warm' ? 'bg-stone-100/80' : 'bg-white/5';
 
   return (
-    <section id="work" className={`${bg} py-32 px-6 md:px-12`}>
+    <section id="work" className={`${bg} py-36 md:py-44 px-6 md:px-12 transition-colors`}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-24 md:mb-32">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <span className={`text-xs tracking-[0.3em] uppercase font-mono ${tagColor}`}>
-                04 — Industrial Case Studies
+              <span className={`text-[11px] tracking-[0.25em] uppercase font-mono ${tagColor}`}>
+                05 / Selected Work
               </span>
-              <span className="w-8 h-px bg-stone-400/40" />
+              <span className="w-12 h-px bg-stone-300 dark:bg-stone-700" />
             </div>
             <h2
-              className={`font-bold leading-tight ${textPrimary}`}
-              style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}
+              className={`font-extrabold tracking-[-0.03em] leading-[0.92] ${textPrimary}`}
+              style={{ fontSize: 'clamp(2.4rem, 5.2vw, 4.4rem)' }}
             >
-              Engineered Machinery &amp; Systems
+              ENGINEERED FOR<br />
+              REAL-WORLD APPLICATIONS.
             </h2>
           </div>
-          <p className={`max-w-md text-sm leading-relaxed ${textSub}`}>
-            Authentic commercial machinery designed, detailed, and production-validated by Invocad for industrial food, agri-processing, and material handling clients.
+
+          <p className={`max-w-md text-sm md:text-base leading-relaxed ${textSub}`}>
+            Authentic commercial machinery designed, detailed, and production-validated by Invocad for industrial food, agri-processing, and automated material handling.
           </p>
         </div>
 
-        {/* Products Grid — 3 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-          {PRODUCTS.map((product) => (
-            <div
-              key={product.id}
-              onClick={() => setSelected(product)}
-              className={`group cursor-pointer rounded-2xl overflow-hidden border ${cardBg} ${cardBorder} hover:shadow-2xl transition-all duration-300 flex flex-col`}
-            >
-              {/* Image Container with CAD Blueprint Backplate */}
-              <div className="relative w-full aspect-[4/3] bg-gradient-to-b from-[#181c24] to-[#0d1016] overflow-hidden flex items-center justify-center p-4">
-                {/* Subtle CAD grid overlay in backplate */}
+        {/* Alternating Large Case Study Panels */}
+        <div className="space-y-28 md:space-y-36">
+          {CASE_STUDIES.map((study, idx) => {
+            const isEven = idx % 2 === 1;
+
+            return (
+              <div
+                key={study.id}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
+              >
+                {/* Visual Side (Large, approx 55%) */}
                 <div
-                  className="absolute inset-0 opacity-10 pointer-events-none"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(to right, #38bdf8 1px, transparent 1px),
-                      linear-gradient(to bottom, #38bdf8 1px, transparent 1px)
-                    `,
-                    backgroundSize: '24px 24px',
-                  }}
-                />
+                  className={`lg:col-span-7 ${
+                    isEven ? 'lg:order-2' : 'lg:order-1'
+                  }`}
+                >
+                  <div
+                    onClick={() => setSelected(study)}
+                    className={`group relative rounded-2xl overflow-hidden cursor-pointer border ${cardBorder} shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] aspect-[16/11] bg-gradient-to-b from-[#181c24] to-[#0c0e14] p-6 md:p-8 flex items-center justify-center`}
+                  >
+                    {/* Architectural Grid Texture in Backplate */}
+                    <div
+                      className="absolute inset-0 opacity-10 pointer-events-none"
+                      style={{
+                        backgroundImage: `
+                          linear-gradient(to right, #38bdf8 1px, transparent 1px),
+                          linear-gradient(to bottom, #38bdf8 1px, transparent 1px)
+                        `,
+                        backgroundSize: '32px 32px',
+                      }}
+                    />
 
-                {/* Product Photo */}
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  loading="lazy"
-                  className="relative z-10 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-xl"
-                />
+                    {/* Machine Photo */}
+                    <img
+                      src={study.image}
+                      alt={study.title}
+                      loading="lazy"
+                      className="relative z-10 w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
+                    />
 
-                {/* Category Pill */}
-                <div className="absolute top-3.5 left-3.5 z-20">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-black/75 text-white/90 backdrop-blur-md border border-white/10">
-                    {product.category}
-                  </span>
-                </div>
-
-                {/* Inspect Overlay Trigger */}
-                <div className="absolute bottom-3.5 right-3.5 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider bg-cyan-500 text-black font-semibold shadow-lg">
-                    <span>Inspect</span>
-                    <ArrowUpRight size={12} />
-                  </span>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className={`font-mono text-[11px] uppercase tracking-wider mb-1.5 ${tagColor}`}>
-                    {product.label}
-                  </div>
-                  <h3 className={`font-bold text-base mb-3 leading-snug ${textPrimary}`}>
-                    {product.title}
-                  </h3>
-                  <p className={`text-xs leading-relaxed line-clamp-2 mb-4 ${textSub}`}>
-                    {product.desc}
-                  </p>
-                </div>
-
-                {/* Key Specifications Badges */}
-                <div className="pt-4 border-t border-stone-200/60 dark:border-white/10 grid grid-cols-2 gap-2">
-                  {product.specs.slice(0, 2).map((spec) => (
-                    <div key={spec.label} className={`p-2 rounded-lg ${specBg}`}>
-                      <div className="text-[9px] font-mono uppercase tracking-wider text-stone-400 truncate">
-                        {spec.label}
-                      </div>
-                      <div className={`text-xs font-semibold truncate ${textPrimary}`}>
-                        {spec.value}
-                      </div>
+                    {/* Category Pill Tag */}
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className="px-3 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase bg-black/75 text-white/90 backdrop-blur-md border border-white/10">
+                        {study.category}
+                      </span>
                     </div>
-                  ))}
+
+                    {/* Hover Inspect Indicator */}
+                    <div className="absolute bottom-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all transform translate-y-1 group-hover:translate-y-0">
+                      <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-semibold tracking-wider uppercase bg-white text-black shadow-lg">
+                        <span>Inspect Case</span>
+                        <ArrowUpRight size={13} />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Narrative & Specifications Side */}
+                <div
+                  className={`lg:col-span-5 flex flex-col justify-center ${
+                    isEven ? 'lg:order-1' : 'lg:order-2'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="font-mono text-xs font-bold text-stone-400">
+                      CASE {study.code}
+                    </span>
+                    <span className="w-8 h-px bg-stone-300 dark:bg-stone-700" />
+                    <span className={`text-[11px] font-mono uppercase tracking-widest ${tagColor}`}>
+                      {study.category}
+                    </span>
+                  </div>
+
+                  <h3
+                    className={`font-extrabold tracking-tight leading-snug mb-4 ${textPrimary}`}
+                    style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)' }}
+                  >
+                    {study.title}
+                  </h3>
+
+                  <p className={`text-sm md:text-base leading-relaxed mb-6 ${textSub}`}>
+                    {study.summary}
+                  </p>
+
+                  {/* Scope Badges */}
+                  <div className="mb-6">
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-stone-400 mb-2">
+                      Engineering Scope
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {study.scope.map((s) => (
+                        <span
+                          key={s}
+                          className={`px-2.5 py-1 rounded-md text-[11px] font-mono border ${
+                            theme === 'warm'
+                              ? 'bg-stone-100 border-stone-200 text-stone-700'
+                              : 'bg-white/5 border-white/10 text-stone-300'
+                          }`}
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quick Specs 2x2 Matrix */}
+                  <div className="grid grid-cols-2 gap-2.5 pt-4 border-t border-stone-200 dark:border-white/10 mb-6">
+                    {study.specs.slice(0, 2).map((spec) => (
+                      <div key={spec.label} className={`p-2.5 rounded-lg ${specBg}`}>
+                        <div className="text-[10px] font-mono uppercase tracking-widest text-stone-400 truncate">
+                          {spec.label}
+                        </div>
+                        <div className={`text-xs font-semibold truncate ${textPrimary}`}>
+                          {spec.value}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Open Case Action */}
+                  <button
+                    onClick={() => setSelected(study)}
+                    className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-cyan-600 dark:text-cyan-400 hover:underline group"
+                  >
+                    <span>VIEW DETAILED BLUEPRINT SPECS</span>
+                    <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
-      {/* Product Detail Modal */}
+      {/* Case Study Detail Modal */}
       {selected && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md animate-fadeIn"
           onClick={() => setSelected(null)}
         >
           <div
-            className={`relative w-full max-w-3xl rounded-2xl ${modalBg} border border-white/15 overflow-hidden shadow-2xl max-h-[90vh] flex flex-col`}
+            className={`relative w-full max-w-4xl rounded-2xl ${modalBg} border border-white/15 overflow-hidden shadow-2xl max-h-[90vh] flex flex-col`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Image Hero */}
-            <div className="relative w-full h-72 md:h-84 bg-gradient-to-b from-[#181c24] to-[#0c0e14] p-6 flex items-center justify-center flex-shrink-0">
+            {/* Modal Image Header */}
+            <div className="relative w-full h-80 md:h-96 bg-gradient-to-b from-[#181c24] to-[#0c0e14] p-8 flex items-center justify-center flex-shrink-0">
               <img
                 src={selected.image}
                 alt={selected.title}
@@ -214,7 +292,7 @@ export const Work: React.FC<WorkProps> = ({ theme }) => {
               />
               <button
                 onClick={() => setSelected(null)}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black text-white/80 hover:text-white backdrop-blur-md flex items-center justify-center transition-colors border border-white/10"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black text-white backdrop-blur-md flex items-center justify-center transition-colors border border-white/10"
               >
                 <X size={16} />
               </button>
@@ -225,44 +303,70 @@ export const Work: React.FC<WorkProps> = ({ theme }) => {
               </div>
             </div>
 
-            {/* Modal Details */}
-            <div className="p-6 md:p-8 overflow-y-auto">
-              <div className={`font-mono text-xs mb-1.5 ${tagColor}`}>{selected.label}</div>
-              <h2 className={`text-2xl font-bold mb-3 ${textPrimary}`}>{selected.title}</h2>
-              <p className={`text-sm leading-relaxed mb-6 ${textSub}`}>{selected.desc}</p>
+            {/* Modal Body */}
+            <div className="p-6 md:p-10 overflow-y-auto">
+              <div className="flex items-center gap-3 mb-2 font-mono text-xs text-stone-400">
+                <span>CASE {selected.code}</span>
+                <span>•</span>
+                <span>{selected.category}</span>
+              </div>
 
-              {/* Full Specs Matrix */}
+              <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${textPrimary}`}>
+                {selected.title}
+              </h2>
+
+              <p className={`text-sm md:text-base leading-relaxed mb-8 ${textSub}`}>
+                {selected.summary}
+              </p>
+
+              {/* Full Technical Specifications */}
               <div className="mb-8">
-                <div className={`text-xs font-mono uppercase tracking-wider mb-3 ${tagColor}`}>
+                <div className="text-xs font-mono uppercase tracking-widest text-stone-400 mb-3">
                   Technical Engineering Specifications
                 </div>
-                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl ${specBg} border border-stone-200/50 dark:border-white/5`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl border border-stone-200 dark:border-white/10 bg-black/5 dark:bg-white/5">
                   {selected.specs.map((spec) => (
                     <div key={spec.label} className="p-2">
                       <div className="text-[10px] font-mono uppercase tracking-wider text-stone-400 mb-0.5">
                         {spec.label}
                       </div>
-                      <div className={`text-sm font-semibold ${textPrimary}`}>{spec.value}</div>
+                      <div className={`text-sm font-semibold ${textPrimary}`}>
+                        {spec.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Engineering Deliverables */}
+              <div className="mb-8">
+                <div className="text-xs font-mono uppercase tracking-widest text-stone-400 mb-3">
+                  Delivered Documentation &amp; Models
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {selected.deliverables.map((deliv) => (
+                    <div key={deliv} className="flex items-center gap-2 text-xs font-mono text-stone-600 dark:text-stone-300">
+                      <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
+                      <span>{deliv}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-stone-200 dark:border-white/10">
-                <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400">
-                  <CheckCircle2 size={15} />
-                  <span>Production-Ready Fabrication Drawings Available</span>
-                </div>
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-stone-200 dark:border-white/10">
+                <span className="text-xs font-mono text-stone-400">
+                  Ready for turnkey manufacturing integration
+                </span>
                 <a
                   href={`${WHATSAPP_BASE}${encodeURIComponent(
-                    `Hi Invocad team, I am interested in technical drawings / manufacturing specs for the ${selected.title}.`
+                    `Hi Invocad team, I am reviewing the ${selected.title} case study and would like to discuss engineering specs.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-sm transition-colors shadow-lg"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-xs font-mono tracking-wider uppercase transition-colors shadow-md"
                 >
-                  <MessageCircle size={16} />
+                  <MessageCircle size={14} />
                   Discuss Machinery on WhatsApp
                 </a>
               </div>
